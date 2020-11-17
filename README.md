@@ -8,7 +8,7 @@
 
 This plugin is a simple wrapper behavior around [Fuse](https://github.com/loilo/Fuse) to implement fuzzy search within any model. Searches can only be performed on strings.
 
-**This behavior can only be used with Cakephp 3.x and 4.x branches.**
+**This behavior requires at least PHP 7.1 and can only be used with Cakephp 3.x and 4.x branches.**
 
 <!-- TOC depthFrom:1 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
 
