@@ -14,7 +14,7 @@ class CoreTest extends TestCase
     /**
      * Test subject
      *
-     * @var \Lqdt\CakephpFuse\Test\Model\Table\BooksTable
+     * @var BooksTable
      */
     protected $Books;
 
