@@ -120,7 +120,7 @@ class FuseBehavior extends Behavior
      * @version 1.0.0
      * @since   1.0.0
      * @param   array     $options Options
-     * @param   bool      $override If set to true, the provided options will replace current options
+     * @param   bool      $replace If set to true, the provided options will replace current options
      * @return  Table              Current table (for chaining purpose)
      * @link https://github.com/loilo/Fuse#Options
      */
