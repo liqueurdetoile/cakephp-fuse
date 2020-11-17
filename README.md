@@ -86,15 +86,28 @@ $query = $this->Items->fuse('test')->contain(['Owners', 'Owners.Services']);
 ```
 
 ## API cheatsheet
+`fuse(string $finder, array $options = [], \Cake\ORM\Query $query = null) : Query`
 
-| Method | Description
-----|---
-`fuse(string $finder, array $options = [], \Cake\ORM\Query $query = null) : Query` | Schedule the fuzzy search with `finder` keyword(s) on the results of the query and returns the query. If none is provided, the autokeys and default options will be applied only at runtime
-`find('fuse', array $options = [])` | Convenient custom finder that relies on `fuse` method
-`getSearchableFields(): array`  | Returns the persistent defined keys for fuzzy search or populates them with autofields if none is set
-`setSearchableFields(array $fields = []): self`  | Sets the persistent defined keys for fuzzy search
-`getFuseOptions(): array`  | Returns the current persistent options
-`setFuseOptions(array $options, bool $replace = false): self`  | Sets the persistent options. If keys are conflicting, provided value will override current value. If `replace` is set to true, all options will be replaced |
+Schedule the fuzzy search with `finder` keyword(s) on the results of the query and returns the query. If none is provided, the autokeys and default options will be applied only at runtime
+
+`find('fuse', array $options = [])`
+
+Convenient custom finder that relies on `fuse` method
+
+`getSearchableFields(): array`
+
+Returns the persistent defined keys for fuzzy search or populates them with autofields if none is set
+
+`setSearchableFields(array $fields = []): self`
+Sets the persistent defined keys for fuzzy search
+
+`getFuseOptions(): array`
+
+Returns the current persistent options
+
+`setFuseOptions(array $options, bool $replace = false): self`
+
+Sets the persistent options. If keys are conflicting, provided value will override current value. If `replace` is set to true, all options will be replaced
 
 There is some more advanced tools that can be found in behavior code.
 
