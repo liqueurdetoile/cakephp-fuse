@@ -70,10 +70,10 @@ $this->addBehavior('Lqdt/CakephpFuse.Fuse', [
 The search can also be done in nested associations (only `hasOne` or `BelongsTo`) by using a dot separator with **property name** :
 
 ```php
-// Assuming Items belonsgTo Owners, with owner as property name
+// Assuming Items belongsTo Owners, with owner as property and name as string field
 $query = $this->Items->fuse('test', ['keys' => ['name', 'owner.name']])->contain(['Owners']);
 
-// Assuming Owners also belonsgTo Services, with service as property name
+// Assuming Owners also belongsTo Services, with service as property and name as string field
 $query = $this->Items->fuse('test', ['keys' => ['name', 'owner.service.name']])->contain(['Owners', 'Owners.Services']);
 ```
 
