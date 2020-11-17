@@ -114,4 +114,26 @@ class CoreTest extends TestCase
         $this->assertStringContainsString('HTML5', json_encode($books));
         $this->assertStringContainsString('Miami', json_encode($books));
     }
+
+    public function testOptions(): void
+    {
+        // Options at behavior creation
+        $authorsOptions = $this->Books->Authors->getFuseOptions();
+        $this->assertEquals(0.65, $authorsOptions['threshold']);
+
+        // Set searchable fields persistent
+        $this->assertEquals([], $this->Books->getFuseOptions());
+        $table = $this->Books->setSearchableFields(['title']);
+        $this->assertEquals($this->Books, $table);
+        $this->assertEquals(['keys' => ['title']], $this->Books->getFuseOptions());
+
+        // Reset Options
+        $this->Books->setFuseOptions([], true);
+        $this->assertEquals([], $this->Books->getFuseOptions());
+
+        // Set options persistent
+        $opts = ['keys' => ['title'], 'threshold' => 0.2];
+        $table = $this->Books->setFuseOptions($opts);
+        $this->assertEquals($opts, $this->Books->getFuseOptions());
+    }
 }
