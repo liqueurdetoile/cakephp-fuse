@@ -1,6 +1,6 @@
 [![Latest Stable Version](https://img.shields.io/github/release/liqueurdetoile/cakephp-fuse.svg?style=flat-square)](https://packagist.org/packages/liqueurdetoile/cakephp-fuse
 )
-[![Build Status](https://travis-ci.com/liqueurdetoile/cakephp-fuse.svg?branch=1.0.0-dev)](https://travis-ci.com/liqueurdetoile/cakephp-fuse)
+[![Build Status](https://travis-ci.com/liqueurdetoile/cakephp-fuse.svg?branch=master)](https://travis-ci.com/liqueurdetoile/cakephp-fuse)
 [![Coverage Status](https://coveralls.io/repos/github/liqueurdetoile/cakephp-fuse/badge.svg?branch=master)](https://coveralls.io/github/liqueurdetoile/cakephp-fuse?branch=master)
 [![license](https://img.shields.io/github/license/liqueurdetoile/cakephp-fuse.svg?style=flat-square)](https://packagist.org/packages/liqueurdetoile/cakephp-fuse)
 
