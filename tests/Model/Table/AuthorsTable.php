@@ -13,6 +13,6 @@ class AuthorsTable extends Table
         $this->hasOne('Adresses', [
           'className' => 'Lqdt\CakephpFuse\Test\Model\Table\AdressesTable'
         ]);
-        $this->addBehavior('Lqdt\CakephpFuse\Model\Behavior\FuseBehavior');
+        $this->addBehavior('Lqdt\CakephpFuse\Model\Behavior\FuseBehavior', ['threshold' => 0.65]);
     }
 }
