@@ -31,11 +31,7 @@ composer require liqueurdetoile/cakephp-fuse
 The plugin itself is only a behavior that [can be attached to any model](https://book.cakephp.org/4/en/orm/behaviors.html) in the `initialize` method :
 
 ```php
-// With cakephp plugin syntax
 $this->addBehavior('Lqdt/CakephpFuse.Fuse');
-
-// With regular namespace syntax
-$this->addBehavior('Lqdt\CakephpFuse\Model\Behavior\FuseBehavior');
 ```
 
 ## Usage
