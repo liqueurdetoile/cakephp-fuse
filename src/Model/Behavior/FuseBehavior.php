@@ -10,6 +10,7 @@ use Fuse\Fuse;
 
 /**
  * Fuse behavior for cakePHP framework
+ *
  * @license MIT
  * @author  Liqueur de Toile <contact@liqueurdetoile.com>
  */
@@ -17,16 +18,18 @@ class FuseBehavior extends Behavior
 {
     /**
      * Stores persistent fuse options for the given model
-     * @var array
+     *
+     * @var  array
      * @link https://github.com/loilo/Fuse#Options
      */
     protected $_fuseOptions = [];
 
     /**
      * Apply given options if anay
+     *
      * @version 1.0.0
      * @since   1.0.0
-     * @param   array     $config Fuse options
+     * @param   array $config Fuse options
      */
     public function initialize(array $config = []): void
     {
@@ -35,9 +38,10 @@ class FuseBehavior extends Behavior
 
     /**
      * Check if Fuse behavior is applied in a table
+     *
      * @version 1.0.0
      * @since   1.0.0
-     * @param   Table     $table Table to test
+     * @param   Table $table Table to test
      * @return  bool
      */
     public function isFuseEnabledInTable(Table $table): bool
@@ -46,11 +50,28 @@ class FuseBehavior extends Behavior
     }
 
     /**
+     * Returns the table linked to behavior
+     *
+     * Since 4.2.0, `Behavior::getTable` have been deprecated in favor of `Behavior::table`
+     *
+     * @return table
+     */
+    public function getCompatibilityTable(): table
+    {
+        if(method_exists($this, 'table')) {
+            return $this->table();
+        }
+
+        return $this->getTable();
+    }
+
+    /**
      * Parse table columns and extract string fields that can be matched against fuse filter
+     *
      * @version 1.0.0
      * @since   1.0.0
-     * @param   Table     $table  Table to scan
-     * @param   array     $fields Previous fields
+     * @param   Table $table  Table to scan
+     * @param   array $fields Previous fields
      * @return  array             Updated fields
      */
     public function getFuseAutoFields(Table $table, array $fields = []): array
@@ -82,7 +103,7 @@ class FuseBehavior extends Behavior
             return $this->_fuseOptions['keys'];
         }
 
-        $table = $this->getTable();
+        $table = $this->getCompatibilityTable();
         $fields = $this->getFuseAutoFields($table);
         $this->setSearchableFields($fields);
 
@@ -91,24 +112,26 @@ class FuseBehavior extends Behavior
 
     /**
      * Set the serachable fields in the current table
+     *
      * @version 1.0.0
      * @since   1.0.0
-     * @param   array     $fields Fields to search
+     * @param   array $fields Fields to search
      * @return  Table             Current table (for chaining purpose)
      */
     public function setSearchableFields(array $fields): Table
     {
         $this->_fuseOptions['keys'] = $fields;
 
-        return $this->getTable();
+        return $this->getCompatibilityTable();
     }
 
     /**
      * Get the current persistent fuse options from the current table
+     *
      * @version 1.0.0
      * @since   1.0.0
      * @return  array     Fuse options
-     * @link https://github.com/loilo/Fuse#Options
+     * @link    https://github.com/loilo/Fuse#Options
      */
     public function getFuseOptions(): array
     {
@@ -117,18 +140,19 @@ class FuseBehavior extends Behavior
 
     /**
      * Set the persistent fuse options for the current table
+     *
      * @version 1.0.0
      * @since   1.0.0
-     * @param   array     $options Options
-     * @param   bool      $replace If set to true, the provided options will replace current options
+     * @param   array $options Options
+     * @param   bool  $replace If set to true, the provided options will replace current options
      * @return  Table              Current table (for chaining purpose)
-     * @link https://github.com/loilo/Fuse#Options
+     * @link    https://github.com/loilo/Fuse#Options
      */
     public function setFuseOptions(array $options, bool $replace = false): Table
     {
         $this->_fuseOptions = $replace ? $options : array_merge($this->_fuseOptions, $options);
 
-        return $this->getTable();
+        return $this->getCompatibilityTable();
     }
 
     /**
@@ -137,14 +161,14 @@ class FuseBehavior extends Behavior
      *
      * @version 1.0.0
      * @since   1.0.0
-     * @param   Query     $query Query
+     * @param   Query $query Query
      * @return  array            Fields list
      */
     public function getFuseKeysFromQuery(Query $query): array
     {
         $fields = $this->getSearchableFields();
         $joints = $query->getContain();
-        $fields = $this->_getKeysFromAssociatedData($this->getTable(), $joints, $fields);
+        $fields = $this->_getKeysFromAssociatedData($this->getCompatibilityTable(), $joints, $fields);
 
         return $fields;
     }
@@ -156,14 +180,14 @@ class FuseBehavior extends Behavior
      *
      * @version 1.0.0
      * @since   1.0.0
-     * @param   string    $filter  Filter to apply
-     * @param   array     $options Optional options
-     * @param   Query     $query   Optional query
+     * @param   string $filter  Filter to apply
+     * @param   array  $options Optional options
+     * @param   Query  $query   Optional query
      * @return  Query              Updated query
      */
     public function fuse(string $filter, array $options = [], Query $query = null): Query
     {
-        $query = $query ?? $this->getTable()->find();
+        $query = $query ?? $this->getCompatibilityTable()->find();
         $options = array_merge($this->_fuseOptions, $options);
 
         $formatter = function (\Cake\Collection\CollectionInterface $items) use ($filter, $options, $query) {
@@ -182,10 +206,11 @@ class FuseBehavior extends Behavior
 
     /**
      * Wrapper for `fuse` method to be used as a custom finder
+     *
      * @version 1.0.0
      * @since   1.0.0
-     * @param   Query     $query   Query
-     * @param   array     $options Runtime options (optional)
+     * @param   Query $query   Query
+     * @param   array $options Runtime options (optional)
      * @return  Query              Updated Query
      */
     public function findFuse(Query $query, array $options = []): Query
@@ -199,12 +224,13 @@ class FuseBehavior extends Behavior
 
     /**
      * Recursive method to process autofields detection when no keys are provided at runtime
+     *
      * @version 1.0.0
      * @since   1.0.0
-     * @param   Table     $table        Starting table
-     * @param   array     $associations Associations to be processed
-     * @param   array     $fields       Current keys array
-     * @param   array     $prefixes     Current prefixes
+     * @param   Table $table        Starting table
+     * @param   array $associations Associations to be processed
+     * @param   array $fields       Current keys array
+     * @param   array $prefixes     Current prefixes
      * @return  array                   Updated fields list
      */
     protected function _getKeysFromAssociatedData(Table $table, array $associations, array $fields, array $prefixes = []): array
@@ -226,9 +252,11 @@ class FuseBehavior extends Behavior
             // Fetch fields from direct childs
             if ($this->isFuseEnabledInTable($target)) {
                 $keys = $target->getSearchableFields();
-                array_walk($keys, function (string $key) use (&$fields, $prefix) {
-                    $fields[] = $prefix . '.' . $key;
-                });
+                array_walk(
+                    $keys, function (string $key) use (&$fields, $prefix) {
+                        $fields[] = $prefix . '.' . $key;
+                    }
+                );
             }
 
             // Process subdata
