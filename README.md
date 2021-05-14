@@ -129,4 +129,5 @@ There is some more advanced tools that can be found in behavior code.
 
 ## CHANGELOG
 
+- v1.0.1: Add compatibility for cakePHP ^4.6 (`getTable` deprecation)
 - v1.0.0: Initial release
