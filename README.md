@@ -40,6 +40,8 @@ The plugin itself is only a behavior that [can be attached to any model](https:/
 $this->addBehavior('Lqdt/CakephpFuse.Fuse');
 ```
 
+Behavior can also be attached *on-the-fly* as it does not require any additional initialize operations.
+
 ## Usage
 
 ### Basic usage
@@ -54,11 +56,11 @@ When providing no additional options or configuration, fuzzy search will be appl
 
 ```php
 $query = $this->Items->fuse('test', ['keys' => ['name'], 'threshold' => 0.2]);
-$query = $this->Items->find('fuse' ['filter' => 'test', 'keys' => ['name'], 'threshold' => 0.2]);
+$query = $this->Items->find('fuse' ['filter' => 'test', 'fuse' => [keys' => ['name'], 'threshold' => 0.2]]);
 ```
 
 ### Persistent configuration
-You can set up your model to always use a persistent configuration set when using fuse. Is some options are also provided on-the-fly, they will be mixed with persistent ones and override the latter when conflicting.
+You can set up your model to always use a given persistent configuration set when using fuse. Is some options are also provided on-the-fly, they will be mixed with persistent ones and override the latter when conflicting.
 
 ```php
 // In the initialize method of the model
@@ -108,7 +110,7 @@ Schedule the fuzzy search with `finder` keyword(s) on the results of the query a
 
 `find('fuse', array $options = [])`
 
-Convenient custom finder that relies on `fuse` method
+Convenient custom finder that relies on `fuse` method. To avoid any conflicts between regular query options and fuse options, expected options must follow this convention : `['filter' => <filter>, 'fuse' => [<fuseOption>:<value>, ...]]`
 
 `getSearchableFields(): array`
 
@@ -128,6 +130,6 @@ Sets the persistent options. If keys are conflicting, provided value will overri
 There is some more advanced tools that can be found in behavior code.
 
 ## CHANGELOG
-
+- v1.0.2 : Fix `find('fuse')` documentation
 - v1.0.1: Add compatibility for cakePHP ^4.2 (`getTable` deprecation)
 - v1.0.0: Initial release
